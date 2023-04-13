@@ -1,1 +1,1 @@
-# passsphere
+# PassSphere Password Manager
