@@ -1,1 +1,1 @@
-# PassSphere Password Manager
+# PassSphere Chrome Extension
