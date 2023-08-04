@@ -1,17 +1,8 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 3,
   "name": "PassSphere Extension",
   "version": "1.0",
   "description": "PassSphere chrome extension",
-  "content_scripts": [
-    {
-      "matches": ["https://example.com/login/*"],
-      "js": ["content.js"]
-    }
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "action": {
     "default_popup": "popup.html"
   },
