@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
+    let cookie = document.cookie
+    let cookieArr = cookie.split('=');
+    if(cookieArr[1] == "false") {
+      displayMessage('Login successful!');
+      document.getElementById("form-group").style.display = "none";
+      document.getElementById("login-btn-div").style.display = "none";
+    }
     const loginBtn = document.getElementById('login-btn');
     const currentWebsiteDiv = document.getElementById('current-website');
+    getCurrentWebsiteCredentials();
   
     function displayMessage(message) {
       const messageDiv = document.getElementById('message');
-      messageDiv.textContent = message;
+      messageDiv.innerHTML = `<p>${message}</p>`;
     }
   
     function handleLogin(email, password) {
@@ -19,13 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
           if (data.success) {
             displayMessage('Login successful!');
+            document.cookie = 'display_login_div=false';
             document.getElementById("form-group").style.display = "none";
             document.getElementById("login-btn-div").style.display = "none";
+            getCurrentWebsiteCredentials();
           } else {
             displayMessage(data.message);
+            document.cookie = 'display_login_div=true';
           }
         })
         .catch(error => {
+          document.cookie = 'display_login_div=true';
           console.error('Error:', error);
         });
     }
@@ -43,7 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
           if (data.success) {
             displayCurrentWebsiteInfo(data);
           } else {
-            currentWebsiteDiv.innerHTML = "<p>No credentials found.</p>"
+            currentWebsiteDiv.innerHTML = `<p>${data.message}</p>`;
+            if(data.message == 'Please log in.') {
+              document.cookie = 'display_login_div=true';
+            }
           }
         })
         .catch(error => {
@@ -53,14 +68,11 @@ document.addEventListener('DOMContentLoaded', function () {
   
     function displayCurrentWebsiteInfo(data) {
       currentWebsiteDiv.innerHTML = '';
-      currentWebsiteDiv.innerHTML = `<p>${data}</p>`
-  
       const websiteDiv = document.createElement('div');
       websiteDiv.innerHTML = `
-      <p><strong>${data.website}</strong></p>
-      <p>Username: ${data.username}</p>
-      <p>Password: ${data.password}</p>
-      <hr>`;
+      <p><strong>Website</strong>: ${data.website}</p>
+      <p><strong>Username</strong>: ${data.username}</p>
+      <p><strong>Password</strong>: ${data.password}</p>`;
       currentWebsiteDiv.appendChild(websiteDiv);
     }
   
@@ -69,8 +81,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const password = document.getElementById('password').value;
       handleLogin(email, password);
     });
-  
-    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-      getCurrentWebsite(tabs[0].url);
-    });
-  });
+
+    function getCurrentWebsiteCredentials() {
+      chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        getCurrentWebsite(tabs[0].url);
+      });
+    }
+});
