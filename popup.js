@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let cookie = document.cookie
+    let cookie = document.cookie;
     let cookieArr = cookie.split('=');
+    // Hide login UI if already logged in
     if(cookieArr[1] == "false") {
       displayMessage('Login successful!');
       document.getElementById("form-group").style.display = "none";
@@ -14,12 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("new-account-header").style.display = "none";
     newAccountMessage.style.display = "none";
     getCurrentWebsiteCredentials();
-  
+    
+    // Display response message for login
     function displayMessage(message) {
       const messageDiv = document.getElementById('message');
       messageDiv.innerHTML = `<p>${message}</p>`;
     }
-  
+    
+    // Handles login functionality and hides components of UI as needed
     function handleLogin(email, password) {
       fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
@@ -49,8 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
           displayMessage('Error: ' + error);
         });
     }
-  
-      function getCurrentWebsite(website) {
+    
+    // Gets the credentials for the current website if it exists
+    function getCurrentWebsite(website) {
       fetch('http://127.0.0.1:5000/account-credentials', {
         method: 'POST',
         headers: {
@@ -78,10 +82,11 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         })
         .catch(error => {
-          currentWebsiteDiv.innerHTML = `<p>Error: ${error}</p>`
+          currentWebsiteDiv.innerHTML = `<p>Error: ${error}</p>`;
         });
     }
-  
+    
+    // Displays the credentials for the current website
     function displayCurrentWebsiteInfo(data) {
       currentWebsiteDiv.innerHTML = '';
       const websiteDiv = document.createElement('div');
@@ -92,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
       currentWebsiteDiv.appendChild(websiteDiv);
     }
 
+    // Adds an account for a new website
     function addAccount(website, username, password) {
       fetch('http://127.0.0.1:5000/add-account', {
         method: 'POST',
@@ -111,13 +117,15 @@ document.addEventListener('DOMContentLoaded', function () {
           newAccountMessage.innerHTML = `<p>Error: ${error}</p>`;
         });
     }
-  
+    
+    // Performs login after button click
     loginBtn.addEventListener('click', function () {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       handleLogin(email, password);
     });
 
+    // Adds account with current website's hostname after button click
     newAccountForm.addEventListener('submit', function (event) {
       event.preventDefault();
       
@@ -131,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
+    // Gets credentials for current website's hostname
     function getCurrentWebsiteCredentials() {
       chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         let url = tabs[0].url;

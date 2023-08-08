@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-  }
+}
   
 .container {
     width: 300px;
@@ -12,7 +12,7 @@ h1 {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
-  }
+}
   
 .form-group {
     display: flex;
@@ -20,49 +20,49 @@ h1 {
     margin-bottom: 15px;
 }
   
-  input {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .message {
-    text-align: center;
-    color: #007bff;
-    margin-bottom: 10px;
-  }
-  
-  #tracked-websites {
-    margin-bottom: 15px;
-  }
-  
-  hr {
-    margin: 15px 0;
-  }
-  
-  #new-account-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #new-account-form input {
-    margin-bottom: 10px;
-  }
-  
-  #new-account-form button {
-    align-self: flex-start;
-  }
+input {
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.message {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+#tracked-websites {
+  margin-bottom: 15px;
+}
+
+hr {
+  margin: 15px 0;
+}
+
+#new-account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#new-account-form input {
+  margin-bottom: 10px;
+}
+
+#new-account-form button {
+  align-self: flex-start;
+}
